@@ -74,6 +74,7 @@ cmd_status_t cmd_handle_listval(FILE *fh, char *buffer) {
 
   char **names = NULL;
   cdtime_t *times = NULL;
+  int *states = NULL;
   size_t number = 0;
 
   DEBUG("utils_cmd_listval: handle_listval (fh = %p, buffer = %s);", (void *)fh,
@@ -87,7 +88,7 @@ cmd_status_t cmd_handle_listval(FILE *fh, char *buffer) {
     free_everything_and_return(CMD_UNKNOWN_COMMAND);
   }
 
-  status = uc_get_names(&names, &times, &number);
+  status = uc_get_names(&names, &times, &states, &number);
   if (status != 0) {
     DEBUG("command listval: uc_get_names failed with status %i", status);
     cmd_error(CMD_ERROR, &err, "uc_get_names failed.");
@@ -97,7 +98,7 @@ cmd_status_t cmd_handle_listval(FILE *fh, char *buffer) {
   print_to_socket(fh, "%i Value%s found\n", (int)number,
                   (number == 1) ? "" : "s");
   for (size_t i = 0; i < number; i++)
-    print_to_socket(fh, "%.3f %s\n", CDTIME_T_TO_DOUBLE(times[i]), names[i]);
+    print_to_socket(fh, "%.3f [%s] %s\n", CDTIME_T_TO_DOUBLE(times[i]), STATE_TO_STRING(states[i]), names[i]);
 
   free_everything_and_return(CMD_OK);
 } /* cmd_status_t cmd_handle_listval */
