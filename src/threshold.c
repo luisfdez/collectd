@@ -122,6 +122,19 @@ static int ut_config_type_datasource(threshold_t *th, oconfig_item_t *ci) {
   return 0;
 } /* int ut_config_type_datasource */
 
+static int ut_config_type_displayname(threshold_t *th, oconfig_item_t *ci) {
+  if ((ci->values_num != 1) || (ci->values[0].type != OCONFIG_TYPE_STRING)) {
+    WARNING("threshold values: The `DisplayName' option needs exactly one "
+            "string argument.");
+    return -1;
+  }
+
+  sstrncpy(th->display_name, ci->values[0].value.string,
+           sizeof(th->display_name));
+
+  return 0;
+} /* int ut_config_type_displayname */
+
 static int ut_config_type_instance(threshold_t *th, oconfig_item_t *ci) {
   if ((ci->values_num != 1) || (ci->values[0].type != OCONFIG_TYPE_STRING)) {
     WARNING("threshold values: The `Instance' option needs exactly one "
@@ -226,6 +239,8 @@ static int ut_config_type(const threshold_t *th_orig, oconfig_item_t *ci) {
       status = ut_config_type_instance(&th, option);
     else if (strcasecmp("DataSource", option->key) == 0)
       status = ut_config_type_datasource(&th, option);
+    else if (strcasecmp("DisplayName", option->key) == 0)
+      status = ut_config_type_displayname(&th, option);
     else if ((strcasecmp("WarningMax", option->key) == 0) ||
              (strcasecmp("FailureMax", option->key) == 0))
       status = ut_config_type_max(&th, option);
@@ -444,6 +459,7 @@ static int ut_report_state(const data_set_t *ds, const value_list_t *vl,
     bufsize -= status;
   }
 
+  plugin_notification_meta_add_string(&n, "DisplayName", th->display_name);
   plugin_notification_meta_add_string(&n, "DataSource", ds->ds[ds_index].name);
   plugin_notification_meta_add_double(&n, "CurrentValue", values[ds_index]);
   plugin_notification_meta_add_double(&n, "WarningMin", th->warning_min);
