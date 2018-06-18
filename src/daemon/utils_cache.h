@@ -36,6 +36,15 @@
 #define STATE_ERROR 2
 #define STATE_MISSING 15
 
+#define STATE_TO_STRING(s)                                                \
+  (s == STATE_OKAY)                                                       \
+      ? "OKAY"                                                            \
+      : (s == STATE_WARNING)                                              \
+            ? "WARNING"                                                   \
+            : (s == STATE_ERROR)                                          \
+                  ? "ERROR"                                               \
+                  : (s == STATE_MISSING) ? "MISSING" : "UNKNOWN"
+
 int uc_init(void);
 int uc_check_timeout(void);
 int uc_update(const data_set_t *ds, const value_list_t *vl);

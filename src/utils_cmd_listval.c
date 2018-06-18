@@ -98,7 +98,7 @@ cmd_status_t cmd_handle_listval(FILE *fh, char *buffer) {
   print_to_socket(fh, "%i Value%s found\n", (int)number,
                   (number == 1) ? "" : "s");
   for (size_t i = 0; i < number; i++)
-    print_to_socket(fh, "%d %s\n", states[i], names[i]);
+    print_to_socket(fh, "%.3f [%s] %s\n", CDTIME_T_TO_DOUBLE(times[i]), STATE_TO_STRING(states[i]), names[i]);
 
   free_everything_and_return(CMD_OK);
 } /* cmd_status_t cmd_handle_listval */
