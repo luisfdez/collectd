@@ -27,6 +27,8 @@
 #ifndef UTILS_THRESHOLD_H
 #define UTILS_THRESHOLD_H 1
 
+#include "utils_avltree.h"
+
 #define UT_FLAG_INVERT 0x01
 #define UT_FLAG_PERSIST 0x02
 #define UT_FLAG_PERCENTAGE 0x04
@@ -58,6 +60,8 @@ threshold_t *threshold_get(const char *hostname, const char *plugin,
                            const char *type_instance);
 
 threshold_t *threshold_search(const value_list_t *vl);
+
+int ut_get_names(char ***ret_names, size_t *ret_number);
 
 int ut_search_threshold(const value_list_t *vl, threshold_t *ret_threshold);
 

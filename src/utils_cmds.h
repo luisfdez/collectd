@@ -37,15 +37,18 @@ typedef enum {
   CMD_GETVAL = 2,
   CMD_LISTVAL = 3,
   CMD_PUTVAL = 4,
+  CMD_LISTTHRESHOLD = 5,
 } cmd_type_t;
-#define CMD_TO_STRING(type)                                                    \
-  ((type) == CMD_FLUSH)                                                        \
-      ? "FLUSH"                                                                \
-      : ((type) == CMD_GETVAL)                                                 \
-            ? "GETVAL"                                                         \
-            : ((type) == CMD_LISTVAL)                                          \
-                  ? "LISTVAL"                                                  \
-                  : ((type) == CMD_PUTVAL) ? "PUTVAL" : "UNKNOWN"
+#define CMD_TO_STRING(type)                                                           \
+  ((type) == CMD_FLUSH)                                                               \
+      ? "FLUSH"                                                                       \
+      : ((type) == CMD_GETVAL)                                                        \
+            ? "GETVAL"                                                                \
+            : ((type) == CMD_LISTVAL)                                                 \
+                  ? "LISTVAL"                                                         \
+                  : ((type) == CMD_PUTVAL)                                            \
+                        ? "PUTVAL"                                                    \
+                        : ((type) == CMD_LISTTHRESHOLD) ? "LISTTHRESHOLD" : "UNKNOWN" \
 
 typedef struct {
   double timeout;

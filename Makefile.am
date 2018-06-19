@@ -439,6 +439,8 @@ libcmds_la_SOURCES = \
 	src/utils_cmd_getval.h \
 	src/utils_cmd_listval.c \
 	src/utils_cmd_listval.h \
+	src/utils_cmd_listthreshold.c \
+	src/utils_cmd_listthreshold.h \
 	src/utils_cmd_putnotif.c \
 	src/utils_cmd_putnotif.h \
 	src/utils_cmd_putval.c \

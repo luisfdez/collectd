@@ -30,6 +30,7 @@
 #include "utils_cmd_flush.h"
 #include "utils_cmd_getval.h"
 #include "utils_cmd_listval.h"
+#include "utils_cmd_listthreshold.h"
 #include "utils_cmd_putval.h"
 #include "utils_cmds.h"
 #include "utils_parse_option.h"
@@ -211,6 +212,9 @@ cmd_status_t cmd_parsev(size_t argc, char **argv, cmd_t *ret_cmd,
     ret_cmd->type = CMD_PUTVAL;
     status =
         cmd_parse_putval(argc - 1, argv + 1, &ret_cmd->cmd.putval, opts, err);
+  } else if (strcasecmp("LISTTHRESHOLD", command) == 0) {
+    ret_cmd->type = CMD_LISTTHRESHOLD;
+    status = cmd_parse_listthreshold(argc - 1, argv + 1, opts, err);
   } else {
     ret_cmd->type = CMD_UNKNOWN;
     cmd_error(CMD_UNKNOWN_COMMAND, err, "Unknown command `%s'.", command);
@@ -251,6 +255,8 @@ void cmd_destroy(cmd_t *cmd) {
     cmd_destroy_getval(&cmd->cmd.getval);
     break;
   case CMD_LISTVAL:
+    break;
+  case CMD_LISTTHRESHOLD:
     break;
   case CMD_PUTVAL:
     cmd_destroy_putval(&cmd->cmd.putval);

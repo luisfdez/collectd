@@ -133,3 +133,72 @@ int ut_search_threshold(const value_list_t *vl, /* {{{ */
 
   return 0;
 } /* }}} int ut_search_threshold */
+
+int ut_get_names(char ***ret_names, size_t *ret_number) {
+  c_avl_iterator_t *iter;
+  char *key;
+  threshold_t *value;
+
+  char **names = NULL;
+
+  size_t number = 0;
+  size_t size_arrays = 0;
+
+  int status = 0;
+
+  if ((ret_names == NULL) || (ret_number == NULL) )
+    return -1;
+
+  pthread_mutex_lock(&threshold_lock);
+
+  size_arrays = (size_t)c_avl_size(threshold_tree);
+  if (size_arrays < 1) {
+    /* Handle the "no thresholds" case here, to avoid the error message when
+     * calloc() returns NULL. */
+    pthread_mutex_unlock(&threshold_lock);
+    return 0;
+  }
+
+  names = calloc(size_arrays, sizeof(*names));
+
+  if (names == NULL) {
+    ERROR("ut_get_names: calloc failed.");
+    sfree(names);
+    pthread_mutex_unlock(&threshold_lock);
+    return ENOMEM;
+  }
+
+  iter = c_avl_get_iterator(threshold_tree);
+  while (c_avl_iterator_next(iter, (void *)&key, (void *)&value) == 0) {
+
+    /* c_avl_size does not return a number smaller than the number of elements
+     * returned by c_avl_iterator_next. */
+    assert(number < size_arrays);
+
+    names[number] = strdup(key);
+    if (names[number] == NULL) {
+      status = -1;
+      break;
+    }
+
+    number++;
+  } /* while (c_avl_iterator_next) */
+
+  c_avl_iterator_destroy(iter);
+  pthread_mutex_unlock(&threshold_lock);
+
+  if (status != 0) {
+    for (size_t i = 0; i < number; i++) {
+      sfree(names[i]);
+    }
+    sfree(names);
+
+    return -1;
+  }
+
+  *ret_names = names;
+
+  *ret_number = number;
+
+  return 0;
+} /* int uc_get_names */
