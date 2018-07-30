@@ -144,6 +144,9 @@ static int ut_config_type(const threshold_t *th_orig, oconfig_item_t *ci) {
     else if (strcasecmp("DataSource", option->key) == 0)
       status = cf_util_get_string_buffer(option, th.data_source,
                                          sizeof(th.data_source));
+    else if (strcasecmp("AlertName", option->key) == 0)
+      status = cf_util_get_string_buffer(option, th.alert_name,
+                                         sizeof(th.alert_name));
     else if (strcasecmp("WarningMax", option->key) == 0)
       status = cf_util_get_double(option, &th.warning_max);
     else if (strcasecmp("FailureMax", option->key) == 0)
@@ -352,6 +355,7 @@ static int ut_report_state(const data_set_t *ds, const value_list_t *vl,
     bufsize -= status;
   }
 
+  plugin_notification_meta_add_string(&n, "AlertName", th->alert_name);
   plugin_notification_meta_add_string(&n, "DataSource", ds->ds[ds_index].name);
   plugin_notification_meta_add_double(&n, "CurrentValue", values[ds_index]);
   plugin_notification_meta_add_double(&n, "WarningMin", th->warning_min);

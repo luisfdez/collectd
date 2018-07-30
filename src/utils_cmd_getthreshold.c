@@ -137,6 +137,8 @@ int handle_getthreshold(FILE *fh, char *buffer) {
     i++;
   if (threshold.data_source[0] != 0)
     i++;
+  if (threshold.alert_name[0] != 0)
+    i++;
   if (!isnan(threshold.warning_min))
     i++;
   if (!isnan(threshold.warning_max))
@@ -177,6 +179,7 @@ int handle_getthreshold(FILE *fh, char *buffer) {
     print_to_socket(fh, "Hysteresis: %g\n", threshold.hysteresis);
   if (threshold.hits > 1)
     print_to_socket(fh, "Hits: %i\n", threshold.hits);
-
+  if (threshold.alert_name[0] != 0)
+    print_to_socket(fh, "Alert Name: %s\n", threshold.display_name);
   return 0;
 } /* int handle_getthreshold */
