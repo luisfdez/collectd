@@ -31,10 +31,12 @@
 
 #include "plugin.h"
 
-#define STATE_OKAY 0
-#define STATE_WARNING 1
-#define STATE_ERROR 2
+#define STATE_UNKNOWN 0
+#define STATE_OKAY 1
+#define STATE_WARNING 2
+#define STATE_ERROR 3
 #define STATE_MISSING 15
+
 
 #define STATE_TO_STRING(s)                                                \
   (s == STATE_OKAY)                                                       \
