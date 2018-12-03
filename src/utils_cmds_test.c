@@ -84,6 +84,25 @@ static struct {
         "FLUSH invalid=option", NULL, CMD_PARSE_ERROR, CMD_UNKNOWN,
     },
 
+    /* Valid FLUSHSTATE commands. */
+    {
+        "FLUSHSTATE myhost/magic/MAGIC", NULL, CMD_OK, CMD_FLUSHSTATE,
+    },
+    {
+        "FLUSHSTATE magic/MAGIC", &default_host_opts, CMD_OK, CMD_FLUSHSTATE,
+    },
+
+    /* Invalid FLUSHSTATE commands. */
+    {
+        "FLUSHSTATE magic/MAGIC", NULL, CMD_PARSE_ERROR, CMD_UNKNOWN,
+    },
+    {
+        "FLUSHSTATE", NULL, CMD_PARSE_ERROR, CMD_UNKNOWN,
+    },
+    {
+        "FLUSHSTATE invalid", NULL, CMD_PARSE_ERROR, CMD_UNKNOWN,
+    },
+
     /* Valid GETVAL commands. */
     {
         "GETVAL myhost/magic/MAGIC", NULL, CMD_OK, CMD_GETVAL,

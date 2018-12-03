@@ -474,6 +474,8 @@ libcmds_la_SOURCES = \
 	src/utils_cmds.h \
 	src/utils_cmd_flush.c \
 	src/utils_cmd_flush.h \
+	src/utils_cmd_flushstate.c \
+	src/utils_cmd_flushstate.h \
 	src/utils_cmd_getthreshold.c \
 	src/utils_cmd_getthreshold.h \
 	src/utils_cmd_getval.c \
