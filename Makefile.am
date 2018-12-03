@@ -472,6 +472,8 @@ test_utils_latency_LDADD = \
 libcmds_la_SOURCES = \
 	src/utils_cmds.c \
 	src/utils_cmds.h \
+	src/utils_cmd_evalstate.c \
+	src/utils_cmd_evalstate.h \
 	src/utils_cmd_flush.c \
 	src/utils_cmd_flush.h \
 	src/utils_cmd_flushstate.c \
