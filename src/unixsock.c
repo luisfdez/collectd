@@ -30,6 +30,7 @@
 #include "utils/common/common.h"
 
 #include "utils/cmds/flush.h"
+#include "utils/cmds/flushstate.h"
 #include "utils/cmds/getthreshold.h"
 #include "utils/cmds/getval.h"
 #include "utils/cmds/listval.h"
@@ -253,6 +254,8 @@ static void *us_handle_client(void *arg) {
       handle_putnotif(fhout, buffer);
     } else if (strcasecmp(fields[0], "flush") == 0) {
       cmd_handle_flush(fhout, buffer);
+    } else if (strcasecmp(fields[0], "flushstate") == 0) {
+      cmd_handle_flushstate(fhout, buffer);
     } else {
       if (fprintf(fhout, "-1 Unknown command: %s\n", fields[0]) < 0) {
         WARNING("unixsock plugin: failed to write to socket #%i: %s",

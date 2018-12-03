@@ -28,6 +28,7 @@
 
 #include "utils/cmds/cmds.h"
 #include "utils/cmds/flush.h"
+#include "utils/cmds/flushstate.h"
 #include "utils/cmds/getval.h"
 #include "utils/cmds/listval.h"
 #include "utils/cmds/parse_option.h"
@@ -200,6 +201,10 @@ cmd_status_t cmd_parsev(size_t argc, char **argv, cmd_t *ret_cmd,
     ret_cmd->type = CMD_FLUSH;
     status =
         cmd_parse_flush(argc - 1, argv + 1, &ret_cmd->cmd.flush, opts, err);
+  } else if (strcasecmp("FLUSHSTATE", command) == 0) {
+    ret_cmd->type = CMD_FLUSHSTATE;
+    status = cmd_parse_flushstate(argc - 1, argv + 1, &ret_cmd->cmd.flushstate,
+                                  opts, err);
   } else if (strcasecmp("GETVAL", command) == 0) {
     ret_cmd->type = CMD_GETVAL;
     status =
@@ -246,6 +251,9 @@ void cmd_destroy(cmd_t *cmd) {
     break;
   case CMD_FLUSH:
     cmd_destroy_flush(&cmd->cmd.flush);
+    break;
+  case CMD_FLUSHSTATE:
+    /* nothing to do */
     break;
   case CMD_GETVAL:
     cmd_destroy_getval(&cmd->cmd.getval);
