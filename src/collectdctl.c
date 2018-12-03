@@ -337,6 +337,31 @@ static int flush(lcc_connection_t *c, int argc, char **argv) {
 #undef BAIL_OUT
 } /* flush */
 
+static int flushstate(lcc_connection_t *c, int argc, char **argv){
+  lcc_identifier_t ident;
+
+  int status;
+
+  assert(strcasecmp(argv[0], "flushstate") == 0);
+
+  if (argc != 2) {
+    fprintf(stderr, "ERROR: flushstate: Missing identifier.\n");
+    return -1;
+  }
+
+  status = parse_identifier(c, argv[1], &ident);
+  if (status != 0)
+    return status;
+
+  status = lcc_flushstate(c, &ident);
+  if (status != 0) {
+    fprintf(stderr, "ERROR: %s\n", lcc_strerror(c));
+    return -1;
+  }
+
+  return 0;
+} /* flushstate */
+
 static int listval(lcc_connection_t *c, int argc, char **argv) {
   lcc_identifier_t *ret_ident = NULL;
   size_t ret_ident_num = 0;
@@ -570,6 +595,8 @@ int main(int argc, char **argv) {
     status = getval(c, argc - optind, argv + optind);
   else if (strcasecmp(argv[optind], "flush") == 0)
     status = flush(c, argc - optind, argv + optind);
+  else if (strcasecmp(argv[optind], "flushstate") == 0)
+    status = flushstate(c, argc - optind, argv + optind);
   else if (strcasecmp(argv[optind], "listval") == 0)
     status = listval(c, argc - optind, argv + optind);
   else if (strcasecmp(argv[optind], "putval") == 0)

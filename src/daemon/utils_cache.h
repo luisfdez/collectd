@@ -52,6 +52,7 @@ int uc_get_names(char ***ret_names, cdtime_t **ret_times, size_t *ret_number);
 
 int uc_get_state(const data_set_t *ds, const value_list_t *vl);
 int uc_set_state(const data_set_t *ds, const value_list_t *vl, int state);
+int uc_set_state_by_name(const char *name, int state);
 int uc_get_hits(const data_set_t *ds, const value_list_t *vl);
 int uc_set_hits(const data_set_t *ds, const value_list_t *vl, int hits);
 int uc_inc_hits(const data_set_t *ds, const value_list_t *vl, int step);

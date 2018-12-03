@@ -682,6 +682,23 @@ int uc_set_state(const data_set_t *ds, const value_list_t *vl, int state) {
   return ret;
 } /* int uc_set_state */
 
+int uc_set_state_by_name(const char *name, int state) {
+  cache_entry_t *ce = NULL;
+  int ret = -1;
+
+  pthread_mutex_lock(&cache_lock);
+
+  if (c_avl_get(cache_tree, name, (void *)&ce) == 0) {
+    assert(ce != NULL);
+    ret = ce->state;
+    ce->state = state;
+  }
+
+  pthread_mutex_unlock(&cache_lock);
+
+  return ret;
+} /* int uc_set_state_by_name */
+
 int uc_get_history_by_name(const char *name, gauge_t *ret_history,
                            size_t num_steps, size_t num_ds) {
   cache_entry_t *ce = NULL;

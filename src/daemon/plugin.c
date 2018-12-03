@@ -1689,6 +1689,7 @@ EXPORT int plugin_read_all_once(void) {
   return return_status;
 } /* int plugin_read_all_once */
 
+/* Relevant: I guess we have to call this thing only with the threshold */
 EXPORT int plugin_write(const char *plugin, /* {{{ */
                         const data_set_t *ds, const value_list_t *vl) {
   llentry_t *le;
@@ -1895,6 +1896,7 @@ EXPORT int plugin_dispatch_missing(const value_list_t *vl) /* {{{ */
   return 0;
 } /* int }}} plugin_dispatch_missing */
 
+/* Relevant */
 static int plugin_dispatch_values_internal(value_list_t *vl) {
   int status;
   static c_complain_t no_write_complaint = C_COMPLAIN_INIT_STATIC;
@@ -1989,6 +1991,7 @@ static int plugin_dispatch_values_internal(value_list_t *vl) {
       return 0;
   }
 
+  /* Relevant */
   /* Update the value cache */
   uc_update(ds, vl);
 

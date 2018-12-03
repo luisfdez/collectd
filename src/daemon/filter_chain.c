@@ -923,6 +923,7 @@ int fc_process_chain(const data_set_t *ds, value_list_t *vl, /* {{{ */
  * matches match. */
 int fc_default_action(const data_set_t *ds, value_list_t *vl) /* {{{ */
 {
+  /* Relevant: it is were, by default the write plugins are invoked */
   /* FIXME: Pass the meta-data to match targets here (when implemented). */
   return fc_bit_write_invoke(ds, vl, NULL, NULL);
 } /* }}} int fc_default_action */
