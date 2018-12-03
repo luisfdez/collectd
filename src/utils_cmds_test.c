@@ -49,6 +49,25 @@ static struct {
   cmd_status_t expected_status;
   cmd_type_t expected_type;
 } parse_data[] = {
+    /* Valid EVALSTATE commands. */
+    {
+        "EVALSTATE myhost/magic/MAGIC", NULL, CMD_OK, CMD_EVALSTATE,
+    },
+    {
+        "EVALSTATE magic/MAGIC", &default_host_opts, CMD_OK, CMD_EVALSTATE,
+    },
+
+    /* Invalid EVALSTATE commands. */
+    {
+        "EVALSTATE magic/MAGIC", NULL, CMD_PARSE_ERROR, CMD_UNKNOWN,
+    },
+    {
+        "EVALSTATE", NULL, CMD_PARSE_ERROR, CMD_UNKNOWN,
+    },
+    {
+        "EVALSTATE invalid", NULL, CMD_PARSE_ERROR, CMD_UNKNOWN,
+    },
+
     /* Valid FLUSH commands. */
     {
         "FLUSH", NULL, CMD_OK, CMD_FLUSH,

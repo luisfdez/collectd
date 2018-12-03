@@ -27,6 +27,7 @@
  **/
 
 #include "daemon/common.h"
+#include "utils_cmd_evalstate.h"
 #include "utils_cmd_flush.h"
 #include "utils_cmd_flushstate.h"
 #include "utils_cmd_getval.h"
@@ -201,6 +202,10 @@ cmd_status_t cmd_parsev(size_t argc, char **argv, cmd_t *ret_cmd,
     ret_cmd->type = CMD_FLUSH;
     status =
         cmd_parse_flush(argc - 1, argv + 1, &ret_cmd->cmd.flush, opts, err);
+  } else if (strcasecmp("EVALSTATE", command) == 0) {
+    ret_cmd->type = CMD_EVALSTATE;
+    status =
+        cmd_parse_evalstate(argc - 1, argv + 1, &ret_cmd->cmd.evalstate, opts, err);
   } else if (strcasecmp("FLUSHSTATE", command) == 0) {
     ret_cmd->type = CMD_FLUSHSTATE;
     status =
@@ -248,6 +253,9 @@ void cmd_destroy(cmd_t *cmd) {
   switch (cmd->type) {
   case CMD_UNKNOWN:
     /* nothing to do */
+    break;
+  case CMD_EVALSTATE:
+    cmd_destroy_evalstate(&cmd->cmd.evalstate);
     break;
   case CMD_FLUSH:
     cmd_destroy_flush(&cmd->cmd.flush);

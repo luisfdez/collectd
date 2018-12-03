@@ -25,7 +25,7 @@ cmd_status_t cmd_parse_flushstate(size_t argc, char **argv, cmd_flushstate_t *re
     return CMD_PARSE_ERROR;
   }
 
-  identifier_copy = sstrdup(argv[0]);
+  identifier_copy = sstrdup(argv[0]); 
 
   ret_flushstate->raw_identifier = identifier_copy;
   return CMD_OK;
