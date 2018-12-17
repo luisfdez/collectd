@@ -262,6 +262,7 @@ void cmd_destroy(cmd_t *cmd) {
     break;
   case CMD_FLUSHSTATE:
     /* nothing to do */
+    break;
   case CMD_GETVAL:
     cmd_destroy_getval(&cmd->cmd.getval);
     break;
