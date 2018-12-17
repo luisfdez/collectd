@@ -95,8 +95,10 @@ __attribute__((noreturn)) static void exit_usage(const char *name, int status) {
 
       " * getval <identifier>\n"
       " * flush [timeout=<seconds>] [plugin=<name>] [identifier=<id>]\n"
+      " * flushstate <identifier>\n"
       " * listval\n"
       " * putval <identifier> [interval=<seconds>] <value-list(s)>\n"
+      " * flushstate <identifier>\n"
 
       "\nIdentifiers:\n\n"
 
