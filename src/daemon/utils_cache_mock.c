@@ -49,7 +49,7 @@ int uc_get_value_by_name(const char *name, value_t **ret_values,
   return ENOTSUP;
 }
 
-int uc_set_state_by_name(const char *name, int state){
+int uc_set_state(const data_set_t *ds, const value_list_t *vl, int state) {
   return ENOTSUP;
 }
 
