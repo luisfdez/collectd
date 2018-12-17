@@ -10,6 +10,8 @@ cmd_status_t cmd_parse_flushstate(size_t argc, char **argv, cmd_flushstate_t *re
                              cmd_error_handler_t *err) {
   char *identifier_copy;
 
+  int status;
+
   if ((ret_flushstate == NULL) || (opts == NULL)) {
     errno = EINVAL;
     cmd_error(CMD_ERROR, err, "Invalid arguments to cmd_parse_flushstate.");
