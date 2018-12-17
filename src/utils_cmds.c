@@ -255,13 +255,13 @@ void cmd_destroy(cmd_t *cmd) {
     /* nothing to do */
     break;
   case CMD_EVALSTATE:
-    cmd_destroy_evalstate(&cmd->cmd.evalstate);
+    /* nothing to do */
     break;
   case CMD_FLUSH:
     cmd_destroy_flush(&cmd->cmd.flush);
     break;
   case CMD_FLUSHSTATE:
-    cmd_destroy_flushstate(&cmd->cmd.flushstate);
+    /* nothing to do */
   case CMD_GETVAL:
     cmd_destroy_getval(&cmd->cmd.getval);
     break;

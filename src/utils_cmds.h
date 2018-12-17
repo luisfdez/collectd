@@ -63,12 +63,11 @@ typedef struct {
 } cmd_flush_t;
 
 typedef struct {
-  char *raw_identifier;
   identifier_t identifier;
 } cmd_evalstate_t;
 
 typedef struct {
-  char *raw_identifier;
+  identifier_t identifier;
 } cmd_flushstate_t;
 
 typedef struct {

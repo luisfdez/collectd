@@ -34,14 +34,13 @@ cmd_status_t cmd_parse_evalstate(size_t argc, char **argv, cmd_evalstate_t *ret_
       &ret_evalstate->identifier.plugin_instance, &ret_evalstate->identifier.type,
       &ret_evalstate->identifier.type_instance, opts->identifier_default_host);
   if (status != 0) {
-    DEBUG("cmd_parse_evalset: Cannot parse identifier `%s'.", identifier_copy);
+    DEBUG("cmd_parse_evalstate: Cannot parse identifier `%s'.", identifier_copy);
     cmd_error(CMD_PARSE_ERROR, err, "Cannot parse identifier `%s'.",
               identifier_copy);
     sfree(identifier_copy);
     return CMD_PARSE_ERROR;
   }
 
-  ret_evalstate->raw_identifier = identifier_copy;
   return CMD_OK;
 } /* cmd_status_t cmd_parse_evalstate */
 
@@ -96,10 +95,3 @@ cmd_status_t cmd_handle_evalstate(FILE *fh, char *buffer) {
   cmd_destroy(&cmd);
   return CMD_OK;
 } /* cmd_status_t cmd_handle_evalstate */
-
-void cmd_destroy_evalstate(cmd_evalstate_t *evalstate) {
-  if (evalstate == NULL)
-    return;
-
-  sfree(evalstate->raw_identifier);
-} /* void cmd_destroy_evalstate */
